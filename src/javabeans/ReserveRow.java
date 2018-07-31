@@ -9,17 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement 
 public class ReserveRow {
-	private String email, time, doctor;
+	private String email, time, doctorName;
 	
 	public ReserveRow() {
 		
 	}
 
-	public ReserveRow(String email, String time, String password) {
+	public ReserveRow(String email, String time, String doctorName) {
 		super();
 		this.email = email;
 		this.time = time;
-		this.doctor = password;
+		this.doctorName = doctorName;
 	}
 
 	public String getTime() {
@@ -30,12 +30,12 @@ public class ReserveRow {
 		this.time = time;
 	}
 
-	public String getPassword() {
-		return doctor;
+	public String getDoctorName() {
+		return doctorName;
 	}
 
-	public void setPassword(String password) {
-		this.doctor = password;
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
 	}
 
 	public String getEmail() {

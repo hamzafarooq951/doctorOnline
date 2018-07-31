@@ -17,11 +17,11 @@ public class UserReserves {
 		this.ReservationsList = reservationsList;
 	}
 
-	public ArrayList<ReserveRow> getReserveList() {
+	public ArrayList<ReserveRow> getReservedDoctors() {
 		return ReservationsList;
 	}
 
-	public void setReserveList(ArrayList<ReserveRow> reservationsList) {
+	public void setReservedDoctors(ArrayList<ReserveRow> reservationsList) {
 		this.ReservationsList = reservationsList;
 	}
 }
