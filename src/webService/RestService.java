@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -43,7 +44,9 @@ public class RestService {
 				loginObject.setEmail(rs.getString("email"));
 				loginObject.setPassword(rs.getString("password"));
 				loginObject.setLoginStatus(true);
+				loginObject.setToken(AuthenticationEndpoint.issueToken((rs.getString("email"))));
 			}
+			
 			con.close();
 			return loginObject;
 		} else {
@@ -104,8 +107,10 @@ public class RestService {
 	@POST
 	@Path("/reserve")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ApiStatus reserveDoctor(@QueryParam("email") String email, @QueryParam("name") String name, @QueryParam("time") String time) throws SQLException {
+	public ApiStatus reserveDoctor(@HeaderParam("Authorization") String token, @QueryParam("email") String email, @QueryParam("name") String name, @QueryParam("time") String time) throws Exception {
 		
+		System.out.println(token);
+		if(AuthenticationEndpoint.authenticateToken(token, email)) {
 		
 		String query = "SELECT * FROM `doctors`";
 		int a = 0;
@@ -127,6 +132,9 @@ public class RestService {
 			}
 		}
 		if(a == 2) {	return new ApiStatus("Doctor is not available at that time"); }
+		
+		} else {	return new ApiStatus("Please login first"); }
+		
 		return null;
 	}
 
@@ -143,9 +151,6 @@ public class RestService {
 		} else {
 			return new ApiStatus("No Reservation found");
 		}
-		
-		
-		
 	}
 
 	@GET
